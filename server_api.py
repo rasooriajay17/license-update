@@ -48,7 +48,9 @@ def generate_blob(expiry_days, max_users):
     expiry_ts = int(time.time()) + (expiry_days * 86400)
 
     payload = f"{expiry_ts}|{max_users}"
-    signature = hmac.new(SECRET_KEY, payload.encode(), hashlib.sha256).hexdigest()
+    #signature = hmac.new(SECRET_KEY, payload.encode(), hashlib.sha256).hexdigest()
+   # ✅ Fix it to this
+    signature = hmac.new(SECRET_KEY, msg=payload.encode(), digestmod=hashlib.sha256).hexdigest()
     token = f"{payload}.{signature}"
 
     data = {
